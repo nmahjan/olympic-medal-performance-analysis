@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olympic Games Analysis Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 60px;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            animation: slideIn 0.5s ease;
+        }
+        
+        .slide.active {
+            display: flex;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 40px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        h2 {
+            color: #3498db;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #e74c3c;
+            font-size: 1.8em;
+            margin: 20px 0;
+        }
+        
+        p, li {
+            font-size: 1.3em;
+            line-height: 1.6;
+            color: #34495e;
+            margin: 15px 0;
+        }
+        
+        ul {
+            margin-left: 40px;
+        }
+        
+        .subtitle {
+            font-size: 1.5em;
+            color: #7f8c8d;
+            text-align: center;
+            margin-top: -10px;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .emphasis {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .data-point {
+            background: #ecf0f1;
+            padding: 20px;
+            border-left: 5px solid #3498db;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .controls {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+        
+        button {
+            padding: 15px 30px;
+            font-size: 1.1em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .olympic-rings {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .ring {
+            width: 60px;
+            height: 60px;
+            border: 5px solid;
+            border-radius: 50%;
+        }
+        
+        .blue { border-color: #0085C7; }
+        .yellow { border-color: #F4C300; }
+        .black { border-color: #000000; }
+        .green { border-color: #009F3D; }
+        .red { border-color: #DF0024; }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            display: block;
+            margin: 10px 0;
+        }
+        
+        .citation {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 30px;
+        }
+        
+        .key-icon {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>🏅 Olympic Games Analysis</h1>
+            <p class="subtitle">120 Years of Athletic Excellence (1896-2016)</p>
+            <div class="olympic-rings">
+                <div class="ring blue"></div>
+                <div class="ring yellow"></div>
+                <div class="ring black"></div>
+                <div class="ring green"></div>
+                <div class="ring red"></div>
+            </div>
+            <div style="text-align: center; margin-top: 50px;">
+                <p><strong>Student:</strong> Neil Mahajan</p>
+                <p><strong>Course:</strong> DAT 301 - Introduction to Data Science</p>
+                <p><strong>Date:</strong> December 2025</p>
+            </div>
+            <div class="slide-number">1 / 12</div>
+        </div>
+
+        <!-- Slide 2: Research Questions -->
+        <div class="slide">
+            <h2>🎯 Research Questions</h2>
+            <ul>
+                <li>Which countries have been most successful in Olympic history?</li>
+                <li>How has athlete participation evolved over 120 years?</li>
+                <li>What are the physical characteristics of medal winners?</li>
+                <li>How has gender participation changed?</li>
+                <li>Which sports produce the most medals?</li>
+                <li>What patterns emerge across Summer vs Winter Olympics?</li>
+            </ul>
+            <div class="highlight" style="margin-top: 30px;">
+                <p><strong>Goal:</strong> Use data science to uncover patterns in over a century of athletic competition</p>
+            </div>
+            <div class="slide-number">2 / 12</div>
+        </div>
+
+        <!-- Slide 3: Data Source -->
+        <div class="slide">
+            <h2>📊 Data Source & Methodology</h2>
+            <div class="data-point">
+                <h3>Dataset Information</h3>
+                <p><strong>Source:</strong> Kaggle - "120 years of Olympic history: athletes and results"</p>
+                <p><strong>Original Source:</strong> Sports-Reference.com (now Olympedia.org)</p>
+                <p><strong>Records:</strong> 271,116 athlete-event entries</p>
+                <p><strong>Time Period:</strong> 1896 to 2016 (31 Olympic Games)</p>
+            </div>
+            <div class="two-column" style="margin-top: 30px;">
+                <div class="stat-box">
+                    <span class="stat-number">15</span>
+                    Features/Columns
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">120+</span>
+                    Years of History
+                </div>
+            </div>
+            <p class="citation">Data Citation: Griffin, R. (2018). Kaggle Dataset</p>
+            <div class="slide-number">3 / 12</div>
+        </div>
+
+        <!-- Slide 4: Data Cleaning -->
+        <div class="slide">
+            <h2>🔧 Data Cleaning Challenges</h2>
+            <h3>Missing Values Found:</h3>
+            <ul>
+                <li><span class="emphasis">9,474</span> missing Age values (~3%)</li>
+                <li><span class="emphasis">60,171</span> missing Height values (~22%)</li>
+                <li><span class="emphasis">62,875</span> missing Weight values (~23%)</li>
+            </ul>
+            
+            <h3 style="margin-top: 40px;">Solutions Implemented:</h3>
+            <div class="data-point">
+                <ul>
+                    <li>✅ Created separate analyses for complete records</li>
+                    <li>✅ Added new features: BMI, Age Groups, Decades</li>
+                    <li>✅ Medal Winner flag (True/False)</li>
+                    <li>✅ Used pandas for data wrangling and groupby operations</li>
+                </ul>
+            </div>
+            <p style="margin-top: 30px;"><em>Note: Missing data is expected for early Olympic records (1896-1920s)</em></p>
+            <div class="slide-number">4 / 12</div>
+        </div>
+
+        <!-- Slide 5: Finding 1 - Country Dominance -->
+        <div class="slide">
+            <h2>🌍 Finding #1: Country Dominance</h2>
+            <div class="highlight">
+                <h3>Top 5 Medal-Winning Countries (All-Time)</h3>
+                <div style="margin: 20px 0;">
+                    <p>🥇 <strong>1. USA</strong> - Clear leader with most total medals</p>
+                    <p>🥈 <strong>2. Soviet Union</strong> - Dominated during Cold War era</p>
+                    <p>🥉 <strong>3. Germany</strong> - Combined East/West Germany records</p>
+                    <p><strong>4. Great Britain</strong> - Consistent performance</p>
+                    <p><strong>5. France</strong> - Strong historical presence</p>
+                </div>
+            </div>
+            <div class="data-point" style="margin-top: 30px;">
+                <p><strong>Key Insight:</strong> These 5 countries account for a <span class="emphasis">disproportionate share</span> of all Olympic medals. Success correlates with economic resources, sports infrastructure, and population size.</p>
+            </div>
+            <p style="margin-top: 20px;"><em>Visualization: Bar chart shows USA with ~5,000+ medals</em></p>
+            <div class="slide-number">5 / 12</div>
+        </div>
+
+        <!-- Slide 6: Finding 2 - Gender Evolution -->
+        <div class="slide">
+            <h2>⚖️ Finding #2: Gender Participation Evolution</h2>
+            <div class="two-column">
+                <div class="stat-box">
+                    <span class="stat-number">~0%</span>
+                    Female Athletes (1896)
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">~45%</span>
+                    Female Athletes (2016)
+                </div>
+            </div>
+            
+            <div class="highlight" style="margin-top: 30px;">
+                <h3>The Dramatic Transformation</h3>
+                <ul>
+                    <li><strong>1896-1920:</strong> Women essentially excluded</li>
+                    <li><strong>1920-1980:</strong> Slow, steady growth begins</li>
+                    <li><strong>1980-2016:</strong> Rapid acceleration toward equality</li>
+                </ul>
+            </div>
+            
+            <div class="data-point" style="margin-top: 30px;">
+                <p><strong>Conclusion:</strong> This represents one of the most significant social changes in Olympic history, reflecting broader movements toward gender equality worldwide.</p>
+            </div>
+            <div class="slide-number">6 / 12</div>
+        </div>
+
+        <!-- Slide 7: Finding 3 - Athlete Characteristics -->
+        <div class="slide">
+            <h2>🏃 Finding #3: What Makes a Medal Winner?</h2>
+            <h3>Average Medal Winner Profile:</h3>
+            <div class="two-column">
+                <div class="data-point">
+                    <p><strong>Age:</strong> ~26 years</p>
+                    <p><strong>Height:</strong> ~175 cm (5'9")</p>
+                    <p><strong>Weight:</strong> ~72 kg (159 lbs)</p>
+                </div>
+                <div class="data-point">
+                    <p><strong>BMI:</strong> ~23.5 (athletic range)</p>
+                    <p><strong>Age Range:</strong> 15-45 years</p>
+                    <p><strong>Peak Age:</strong> 24-28 years</p>
+                </div>
+            </div>
+            
+            <div class="highlight" style="margin-top: 30px;">
+                <h3>Sport-Specific Variations</h3>
+                <ul>
+                    <li>🏀 <strong>Basketball/Volleyball:</strong> Taller athletes (190+ cm)</li>
+                    <li>🤸 <strong>Gymnastics:</strong> Shorter, lighter athletes (160 cm)</li>
+                    <li>🚣 <strong>Rowing/Weightlifting:</strong> Heaviest athletes (85+ kg)</li>
+                </ul>
+            </div>
+            
+            <p style="margin-top: 20px;"><em>Visualization: Scatter plot shows height vs weight with color-coded medals</em></p>
+            <div class="slide-number">7 / 12</div>
+        </div>
+
+        <!-- Slide 8: Sports Analysis -->
+        <div class="slide">
+            <h2>🏅 Most Popular Sports</h2>
+            <div class="highlight">
+                <h3>Top 5 Sports by Medal Count</h3>
+                <div style="margin: 20px 0; font-size: 1.2em;">
+                    <p>🥇 <strong>Athletics</strong> (Track & Field) - Most medals by far</p>
+                    <p>🥈 <strong>Swimming</strong> - Second highest</p>
+                    <p>🥉 <strong>Rowing</strong> - Multiple boats and sizes</p>
+                    <p><strong>4. Gymnastics</strong> - Multiple events and apparatus</p>
+                    <p><strong>5. Fencing</strong> - Multiple weapons and team events</p>
+                </div>
+            </div>
+            
+            <div class="data-point" style="margin-top: 30px;">
+                <p><strong>Why These Sports?</strong></p>
+                <ul>
+                    <li>Multiple events within each sport</li>
+                    <li>Various weight classes, distances, or apparatus</li>
+                    <li>Both individual and team competitions</li>
+                </ul>
+            </div>
+            <div class="slide-number">8 / 12</div>
+        </div>
+
+        <!-- Slide 9: Summer vs Winter -->
+        <div class="slide">
+            <h2>☀️ Summer vs ❄️ Winter Olympics</h2>
+            <div class="two-column">
+                <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 15px; color: white;">
+                    <h3 style="color: white;">Summer Olympics</h3>
+                    <p><strong>Athletes:</strong> ~10,000+ (2016)</p>
+                    <p><strong>Sports:</strong> 30+</p>
+                    <p><strong>Events:</strong> 300+</p>
+                    <p><strong>Countries:</strong> 200+</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 30px; border-radius: 15px; color: white;">
+                    <h3 style="color: white;">Winter Olympics</h3>
+                    <p><strong>Athletes:</strong> ~2,500 (2014)</p>
+                    <p><strong>Sports:</strong> 15</p>
+                    <p><strong>Events:</strong> 100+</p>
+                    <p><strong>Countries:</strong> 90+</p>
+                </div>
+            </div>
+            
+            <div class="data-point" style="margin-top: 30px;">
+                <p><strong>Key Difference:</strong> Summer Olympics are ~4-5x larger due to:</p>
+                <ul>
+                    <li>More globally accessible sports</li>
+                    <li>Less infrastructure requirements</li>
+                    <li>Greater number of team sports</li>
+                </ul>
+            </div>
+            <div class="slide-number">9 / 12</div>
+        </div>
+
+        <!-- Slide 10: Technical Approach -->
+        <div class="slide">
+            <h2>💻 Technical Approach</h2>
+            <div class="highlight">
+                <h3>Python Libraries Used:</h3>
+                <ul>
+                    <li><strong>🐼 Pandas:</strong> Data manipulation, cleaning, groupby operations</li>
+                    <li><strong>📊 Matplotlib:</strong> Creating visualizations and plots</li>
+                    <li><strong>🎨 Seaborn:</strong> Statistical data visualization</li>
+                    <li><strong>🔢 NumPy:</strong> Numerical operations and calculations</li>
+                </ul>
+            </div>
+            
+            <div class="data-point" style="margin-top: 30px;">
+                <h3>Key Techniques:</h3>
+                <ul>
+                    <li>✅ Data cleaning: Handling 60,000+ missing values</li>
+                    <li>✅ Feature engineering: Created BMI, age groups, decades</li>
+                    <li>✅ GroupBy operations: Aggregating by country, year, sport</li>
+                    <li>✅ Filtering: Isolating medal winners and specific time periods</li>
+                    <li>✅ Visualization: 9 different plot types for comprehensive analysis</li>
+                </ul>
+            </div>
+            <div class="slide-number">10 / 12</div>
+        </div>
+
+        <!-- Slide 11: Limitations -->
+        <div class="slide">
+            <h2>⚠️ Limitations & Future Work</h2>
+            <h3>Data Limitations:</h3>
+            <div class="data-point">
+                <ul>
+                    <li>Missing historical data (age, height, weight) from early Olympics</li>
+                    <li>No host country information for home advantage analysis</li>
+                    <li>Team vs individual medal counting complexity</li>
+                    <li>Doping scandals and medal revocations not reflected</li>
+                </ul>
+            </div>
+            
+            <h3 style="margin-top: 30px;">Future Research Ideas:</h3>
+            <div class="highlight">
+                <ul>
+                    <li>📈 Correlation between GDP and medal success</li>
+                    <li>🏠 Analysis of host country advantage</li>
+                    <li>💰 Impact of professional vs amateur status</li>
+                    <li>🌡️ Climate and geographic factors in sport success</li>
+                    <li>👥 Population size correlation with medal counts</li>
+                </ul>
+            </div>
+            <div class="slide-number">11 / 12</div>
+        </div>
+
+        <!-- Slide 12: Conclusion -->
+        <div class="slide">
+            <h2>🎯 Key Takeaways</h2>
+            <div class="highlight">
+                <h3>Three Major Insights:</h3>
+                <div style="margin: 20px 0;">
+                    <p><strong>1️⃣ Country Dominance:</strong> USA, Soviet Union, and Germany historically dominate medal counts, reflecting economic and political power.</p>
+                    
+                    <p style="margin-top: 20px;"><strong>2️⃣ Gender Evolution:</strong> Female participation grew from 0% to 45%, representing tremendous social progress over 120 years.</p>
+                    
+                    <p style="margin-top: 20px;"><strong>3️⃣ Athletic Diversity:</strong> Olympic athletes show wide variation in physical characteristics, with sport-specific requirements playing major roles.</p>
+                </div>
+            </div>
+            
+            <div class="olympic-rings" style="margin-top: 40px;">
+                <div class="ring blue"></div>
+                <div class="ring yellow"></div>
+                <div class="ring black"></div>
+                <div class="ring green"></div>
+                <div class="ring red"></div>
+            </div>
+            
+            <h1 style="font-size: 2em; margin-top: 30px;">Thank You! 🏅</h1>
+            <div class="slide-number">12 / 12</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
+                changeSlide(1);
+            } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                changeSlide(-1);
+            }
+        });
+
+        // Initialize
+        document.getElementById('prevBtn').disabled = true;
+    </script>
+</body>
+</html>
