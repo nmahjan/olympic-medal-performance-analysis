@@ -165,8 +165,6 @@ Feel free to fork this repository and submit pull requests for improvements!
 ## 📧 Contact
 
 **Neil Mahajan**  
-[Your LinkedIn] | [Your Email] | [Your Portfolio]
-
 ---
 
 *Analyzing 120 years of Olympic excellence through data science*
